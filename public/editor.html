@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Creative Social — Editor</title>
+  <link rel="stylesheet" href="./styles/editor.css">
+</head>
+<body>
+  <main class="editor-root">
+    <aside class="toolbar">
+      <h2>Herramientas</h2>
+      <label>Color <input id="color" type="color" value="#000000"></label>
+      <label>Tamaño <input id="size" type="range" min="1" max="60" value="6"></label>
+      <label>Herr. 
+        <select id="tool">
+          <option value="pen">Lápiz</option>
+          <option value="eraser">Borrador</option>
+        </select>
+      </label>
+      <div class="buttons">
+        <button id="undo">Deshacer</button>
+        <button id="clear">Limpiar</button>
+        <button id="export">Exportar PNG</button>
+      </div>
+
+      <hr>
+
+      <h3>Borradores locales</h3>
+      <label>Nombre <input id="draftName" type="text" placeholder="Mi dibujo"></label>
+      <div class="buttons">
+        <button id="saveDraft">Guardar</button>
+        <button id="saveDownload">Guardar y descargar</button>
+      </div>
+
+      <label>Cargar borrador
+        <select id="drafts"></select>
+      </label>
+      <div class="buttons">
+        <button id="loadDraft">Cargar</button>
+        <button id="deleteDraft">Eliminar</button>
+      </div>
+    </aside>
+
+    <section class="canvas-wrap">
+      <div class="canvas-toolbar">Arrastra para dibujar — compatible touch</div>
+      <canvas id="canvas"></canvas>
+    </section>
+  </main>
+
+  <script src="./js/storage.js" defer></script>
+  <script src="./js/drawing.js" defer></script>
+</body>
+</html>
