@@ -1,35 +1,76 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil de Usuario</title>
-    <link rel="stylesheet" href="styles/main.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Creative Social — Editor</title>
+  <link rel="stylesheet" href="./styles/main.css">
+  <link rel="stylesheet" href="./styles/editor.css">
 </head>
 <body>
-    <header>
-        <h1>Perfil de Usuario</h1>
-        <nav>
-            <a href="index.html">Inicio</a>
-            <a href="editor.html">Crear</a>
-        </nav>
-    </header>
-    <main>
-        <section id="user-profile">
-            <h2 id="username">Nombre de Usuario</h2>
-            <div id="user-creations">
-                <h3>Mis Creaciones</h3>
-                <div id="creations-list">
-                    <!-- Aquí se mostrarán las creaciones del usuario -->
-                </div>
-            </div>
-            <div id="customization-options">
-                <h3>Opciones de Personalización</h3>
-                <button id="change-background">Cambiar Fondo</button>
-                <button id="edit-profile">Editar Perfil</button>
-            </div>
-        </section>
-    </main>
-    <script src="../src/js/profile.js"></script>
+  <header class="site-nav" role="navigation">
+    <div class="site-brand">CreativeSocial</div>
+    <nav class="nav-links" aria-label="Main">
+      <a class="nav-link" href="index.html">Feed</a>
+      <a class="nav-link" href="editor.html">Editor</a>
+      <a class="nav-link" href="profile.html">Perfil</a>
+    </nav>
+    <div class="nav-actions">
+      <span class="badge" id="userBadge">Invitado</span>
+      <button class="btn-sm" onclick="location.href='editor.html'">Nuevo</button>
+    </div>
+  </header>
+
+  <main class="editor-root">
+    <aside class="toolbar">
+      <h2>Herramientas</h2>
+      <label>Color <input id="color" type="color" value="#000000"></label>
+      <label>Tamaño <input id="size" type="range" min="1" max="60" value="6"></label>
+      <label>Herr. 
+        <select id="tool">
+          <option value="pen">Lápiz</option>
+          <option value="eraser">Borrador</option>
+        </select>
+      </label>
+      <div class="buttons">
+        <button id="undo">Deshacer</button>
+        <button id="clear">Limpiar</button>
+        <button id="export">Exportar PNG</button>
+      </div>
+
+      <hr>
+
+      <h3>Borradores locales</h3>
+      <label>Nombre <input id="draftName" type="text" placeholder="Mi dibujo"></label>
+      <div class="buttons">
+        <button id="saveDraft">Guardar</button>
+        <button id="saveDownload">Guardar y descargar</button>
+      </div>
+
+      <label>Cargar borrador
+        <select id="drafts"></select>
+      </label>
+      <div class="buttons">
+        <button id="loadDraft">Cargar</button>
+        <button id="deleteDraft">Eliminar</button>
+      </div>
+
+      <hr>
+
+      <!-- Botón para volver al perfil -->
+      <div class="buttons">
+        <button class="btn-sm" onclick="location.href='profile.html'">Volver a mi perfil</button>
+      </div>
+    </aside>
+
+    <section class="canvas-wrap">
+      <div class="canvas-toolbar">Arrastra para dibujar — compatible touch</div>
+      <canvas id="canvas"></canvas>
+    </section>
+  </main>
+
+  <script src="./js/storage.js" defer></script>
+  <script src="./js/drawing.js" defer></script>
+  <script src="./js/nav.js" defer></script>
 </body>
 </html>

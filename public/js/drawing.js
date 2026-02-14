@@ -20,17 +20,17 @@ document.addEventListener('DOMContentLoaded', () => {
   function fitCanvas(){
     const ratio = window.devicePixelRatio || 1
     const rect = canvas.getBoundingClientRect()
-    // keep current content
     const img = new Image()
     img.src = canvas.toDataURL()
     canvas.width = Math.max(1, Math.floor(rect.width * ratio))
     canvas.height = Math.max(1, Math.floor((rect.height) * ratio))
     canvas.style.width = rect.width + 'px'
     canvas.style.height = rect.height + 'px'
+    ctx.setTransform(1,0,0,1,0,0)
     ctx.scale(ratio, ratio)
     img.onload = ()=>{
       ctx.clearRect(0,0,canvas.width,canvas.height)
-      ctx.drawImage(img, 0, 0, rect.width, rect.height)
+      try{ ctx.drawImage(img, 0, 0, rect.width, rect.height) }catch(e){}
     }
   }
 
@@ -167,10 +167,29 @@ document.addEventListener('DOMContentLoaded', () => {
     fitCanvas()
     ctx.fillStyle = '#fff'
     ctx.fillRect(0,0,canvas.width,canvas.height)
+
+    // --- LOAD FROM PROFILE (if user clicked "Editar" en profile) ---
+    const loadId = localStorage.getItem('cs-load-id')
+    if(loadId){
+      const item = StorageCS.get(loadId)
+      if(item){
+        const img = new Image()
+        img.onload = ()=>{
+          ctx.clearRect(0,0,canvas.width,canvas.height)
+          // draw scaled to canvas CSS size
+          const ratio = window.devicePixelRatio || 1
+          const w = canvas.width / ratio
+          const h = canvas.height / ratio
+          ctx.drawImage(img, 0, 0, w, h)
+        }
+        img.src = item.dataURL
+      }
+      localStorage.removeItem('cs-load-id')
+    }
     refreshDrafts()
   }
 
-  window.addEventListener('resize', ()=>{ // preserve content by re-drawing snapshot
+  window.addEventListener('resize', ()=>{ 
     const data = canvas.toDataURL()
     fitCanvas()
     const img = new Image()
